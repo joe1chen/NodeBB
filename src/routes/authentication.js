@@ -186,9 +186,15 @@
 						/* End backwards compatibility block */
 
 						if (strategy.url) {
-							router.get(strategy.url, passport.authenticate(strategy.name, {
+							var options = {
 								scope: strategy.scope
-							}));
+							};
+
+							if (strategy.state) {
+								options.state = strategy.state;
+							}
+
+							router.get(strategy.url, passport.authenticate(strategy.name, options));
 						}
 
 						router.get(strategy.callbackURL, passport.authenticate(strategy.name, {
